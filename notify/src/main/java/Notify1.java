@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  *
  * notify()和notifyAll()的区别：
  * 关注下面注释的代码行，执行后很快就能注意到区别。
- * notify()只有通知一个线程（最早阻塞等待）；notifyAll()会通知所有阻塞线程竞争，执行顺序不一定。
+ * notify()只有通知一个线程（最早等待）；notifyAll()会通知所有等待线程竞争，执行顺序不一定。
  *
  * */
 public class Notify1 {
@@ -46,7 +46,7 @@ public class Notify1 {
                     System.out.println("条件满足，继续等待：" + Thread.currentThread());
                     try {
                         LOCK.wait();
-                        // wait()将导致线程阻塞等待唤醒，唤醒前不再执行后面的代码
+                        // wait()将导致线程处于等待状态，唤醒前不再执行后面的代码
                     } catch (InterruptedException interruptedException) {
                         interruptedException.printStackTrace();
                     }
