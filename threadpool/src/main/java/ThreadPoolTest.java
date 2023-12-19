@@ -11,12 +11,12 @@ import java.util.concurrent.TimeUnit;
 public class ThreadPoolTest {
     public static void main(String[] args) throws InterruptedException {
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 5, 3L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>(5),
+                new LinkedBlockingQueue<Runnable>(15),
                 //new CustomizableThreadFactory("thread-name"),
                 new ThreadFactoryBuilder().setNameFormat("Thread-task-%d").build(),
                 new ThreadPoolExecutor.AbortPolicy());
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             threadPoolExecutor.execute(new Runnable() {
                 public void run() {
                     try {
@@ -31,5 +31,12 @@ public class ThreadPoolTest {
 
         TimeUnit.SECONDS.sleep(3);
         threadPoolExecutor.shutdown();
+
+//        TimeUnit.SECONDS.sleep(3);
+//        threadPoolExecutor.execute(new Runnable() {
+//            public void run() {
+//                System.out.println("=====" + Thread.currentThread().getName() + "     " + Thread.currentThread().getId());
+//            }
+//        });
     }
 }
