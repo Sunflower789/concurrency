@@ -1,0 +1,5 @@
+threadpool:
+  corePoolSize: 8
+  maxPoolSize: 1000
+  queueCapacity: 2000
+  keepAliveSeconds: 10
