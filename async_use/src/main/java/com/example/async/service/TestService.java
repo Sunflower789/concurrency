@@ -17,6 +17,9 @@ public class TestService {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private TestService02 testService02;
+
     public void test01(int count) throws InterruptedException {
         TestService testServiceTemp = applicationContext.getBean(TestService.class);
         for (int i = 0; i < count; i++) {
@@ -26,9 +29,16 @@ public class TestService {
 
     @Async
     public void test01Temp() throws InterruptedException {
-        logger.info("start --> Thread name: {},id:{}",Thread.currentThread().getName(),Thread.currentThread().getId());
+        logger.info("start --> Thread name: {},id:{}", Thread.currentThread().getName(), Thread.currentThread().getId());
         TimeUnit.SECONDS.sleep(1);
         //int a = 1/0;
-        logger.info("end --> Thread name: {},id:{}",Thread.currentThread().getName(),Thread.currentThread().getId());
+        logger.info("end --> Thread name: {},id:{}", Thread.currentThread().getName(), Thread.currentThread().getId());
     }
+
+    public void test02(int count) throws InterruptedException {
+        for (int i = 0; i < count; i++) {
+            testService02.test02Temp();
+        }
+    }
+
 }

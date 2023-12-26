@@ -19,8 +19,9 @@ public class TestController {
     TestService testService;
 
     @PostMapping("/test01")
-    public void test01(@RequestHeader("count") Integer count) throws InterruptedException {
+    public String test01(@RequestHeader("count") Integer count) throws InterruptedException {
         logger.info("***** test01 *****");
         testService.test01(count);
+        return "SUCCESS";
     }
 }
