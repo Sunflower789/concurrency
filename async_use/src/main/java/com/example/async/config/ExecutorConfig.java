@@ -7,6 +7,7 @@ import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -41,11 +42,10 @@ public class ExecutorConfig implements AsyncConfigurer {
         return new SpringAsyncExceptionHandler();
     }
 
-    class SpringAsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
-
+    static class SpringAsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
         @Override
         public void handleUncaughtException(Throwable throwable, Method method, Object... obj) {
-            logger.error("消息处理失败,异常消息:{},抛出方法:{},入参:{}", throwable, method, JSON.toJSONString(obj));
+            logger.error("任务处理异常:{}, 抛出方法:{}, 入参:{}", throwable, method, JSON.toJSONString(obj));
         }
     }
 
@@ -57,13 +57,13 @@ public class ExecutorConfig implements AsyncConfigurer {
         executor.setMaxPoolSize(maxPoolSize);
         executor.setQueueCapacity(queueCapacity);
         executor.setKeepAliveSeconds(keepAliveSeconds);
-        executor.setThreadNamePrefix("logMessageConsumer-");
+        executor.setThreadNamePrefix("testThread-");
         executor.setRejectedExecutionHandler(new LogAbortPolicy());
         executor.initialize();
         return executor;
     }
 
-    class LogAbortPolicy implements RejectedExecutionHandler{
+    static class LogAbortPolicy implements RejectedExecutionHandler{
         /**
          * Always print RejectedExecutionException but not throws RejectedExecutionException.
          *
@@ -72,8 +72,11 @@ public class ExecutorConfig implements AsyncConfigurer {
          */
         @Override
         public void rejectedExecution(Runnable r, ThreadPoolExecutor e) {
-            logger.warn("threadPool reject a task;corePoolSize:{},poolSize:{},activeCount:{},taskCount:{}",e.getCorePoolSize(),e.getPoolSize(),e.getActiveCount(),e.getTaskCount());
-            logger.error("RejectedExecutionException",e);
+            logger.error("RejectedExecutionException;corePoolSize:{},poolSize:{},activeCount:{},taskCount:{}",e.getCorePoolSize(),e.getPoolSize(),e.getActiveCount(),e.getTaskCount());
+            // TODO
+//            if (!e.isShutdown()) {
+//                r.run();
+//            }
         }
     }
 }
