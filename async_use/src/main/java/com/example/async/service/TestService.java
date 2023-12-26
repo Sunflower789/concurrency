@@ -1,5 +1,6 @@
 package com.example.async.service;
 
+import com.example.async.utils.ApplicationContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,12 @@ public class TestService {
     @Autowired
     private TestService02 testService02;
 
+    @Autowired
+    ApplicationContextUtil applicationContextUtil;
+
     public void test01(int count) throws InterruptedException {
-        TestService testServiceTemp = applicationContext.getBean(TestService.class);
+        //TestService testServiceTemp = applicationContext.getBean(TestService.class);
+        TestService testServiceTemp = (TestService) ApplicationContextUtil.getBean("testService");
         for (int i = 0; i < count; i++) {
             testServiceTemp.test01Temp();
         }
