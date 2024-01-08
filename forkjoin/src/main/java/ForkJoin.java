@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * */
 public class ForkJoin {
 
+    // 定义一个工作窃取线程，可以使用默认的参数：CPU核数
     public final static ForkJoinPool mainPool = new ForkJoinPool();
     public final static int NUM = 100;
     public static volatile AtomicInteger count = new AtomicInteger(0);
