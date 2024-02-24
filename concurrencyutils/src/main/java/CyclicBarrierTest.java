@@ -44,7 +44,7 @@ public class CyclicBarrierTest {
                 System.out.println("num is : " + num);
                 TimeUnit.MILLISECONDS.sleep(100);
                 // 插入一个内存屏障
-                cyclicBarrier.await();
+                cyclicBarrier.await();    //可以加超时时间：cyclicBarrier.await(10,TimeUnit.SECONDS)
             } catch (InterruptedException interruptedException) {
                 interruptedException.printStackTrace();
             } catch (BrokenBarrierException e) {
