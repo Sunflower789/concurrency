@@ -10,8 +10,9 @@ import java.util.concurrent.TimeUnit;
  * */
 public class ThreadPoolTest {
     public static void main(String[] args) throws InterruptedException {
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 5, 3L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>(15),
+        int count = 10;
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 5, 3L, TimeUnit.SECONDS,
+                new LinkedBlockingQueue<Runnable>(count),
                 //new CustomizableThreadFactory("thread-name"),
                 new ThreadFactoryBuilder().setNameFormat("Thread-task-%d").build(),
                 new ThreadPoolExecutor.AbortPolicy());
